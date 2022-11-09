@@ -11,6 +11,10 @@ class URL_mapForm(FlaskForm):
     )
     custom_id = StringField(
         'Ваш вариант короткой ссылки',
-        validators=[Length(1, 16), Optional(), Regexp('^[A-Za-z0-9_]+$', message='Недопустимое имя')]
+        validators=[
+            Length(1, 16),
+            Optional(),
+            Regexp('^[A-Za-z0-9_]+$', message='Недопустимое имя')
+        ]
     )
     submit = SubmitField('Создать')

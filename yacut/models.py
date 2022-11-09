@@ -17,5 +17,6 @@ class URL_map(db.Model):
             short_link=url_for(
                 'redirect_view',
                 url=self.short,
-                _external=True)
+                _external=True
             )
+        )
