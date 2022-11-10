@@ -1,17 +1,9 @@
-import string
-import random
-
 from flask import abort, flash, redirect, render_template
 
 from . import app, db
 from .forms import URL_mapForm
 from .models import URL_map
-
-
-def get_unique_short_id():
-    letters_and_digits = string.ascii_letters + string.digits
-    short_link = ''.join(random.choices(letters_and_digits, k=6))
-    return short_link
+from .utils import get_unique_short_id
 
 
 @app.route('/', methods=['GET', 'POST'])

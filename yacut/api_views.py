@@ -1,10 +1,11 @@
 import re
+from http import HTTPStatus
 
 from flask import jsonify, request
 
 from . import app, db
 from .models import URL_map
-from .views import get_unique_short_id
+from .utils import get_unique_short_id
 from .error_handlers import InvalidAPIUsage
 
 
@@ -35,12 +36,12 @@ def create_short_link():
     )
     db.session.add(url)
     db.session.commit()
-    return jsonify(url.to_dict()), 201
+    return jsonify(url.to_dict()), HTTPStatus.CREATED
 
 
 @app.route('/api/id/<string:custom_id>/', methods=['GET'])
 def get_url(custom_id):
     url = URL_map.query.filter_by(short=custom_id).first()
     if url is None:
-        raise InvalidAPIUsage('Указанный id не найден', 404)
-    return jsonify({'url': url.original}), 200
+        raise InvalidAPIUsage('Указанный id не найден', HTTPStatus.NOT_FOUND)
+    return jsonify({'url': url.original}), HTTPStatus.OK
